@@ -383,12 +383,12 @@ $scope.kotmenus = [];
 	 $scope.kotdata.Room_No = $scope.data.roomno;
 	 $scope.kotdata.Room_folio = $scope.data.folio;
          var request = {
-                    method: "JSONP",
+                    method: "POST",
                     url: BASE_URL+"/saveKot",
                     headers: {'content-type': 'application/json; charset=UTF-8','Authorization': 'bearer'},
                     data: $scope.kotdata
                      };
-         $http.post(request).then(function(data){console.log(data)});
+         $http(request).then(function(data){console.log(data)});
          
          console.log($scope.kotdata);
 	    

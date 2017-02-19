@@ -1,0 +1,30 @@
+<ion-view view-title="KOTS" class="modal menumodal" on-swipe-down="closekotModal()"  overflow-scroll = "false" >
+   <ion-header-bar class="bar bar-header bar-royal">
+          <h1 class="title"> KOTS </h1>
+                       <button class="button  buttons-right button-royal icon ion-close" ng-click="closekotModal()"></button>
+        </ion-header-bar>
+  <ion-content overflow-scroll = "false">
+      <ion-list>
+          <ion-item class="list-divider row">
+              <div class="col col-20">Location</div>
+              <div class="col col-20">KOT No</div>
+              <div class="col col-20">Table No</div>
+              <div class="col col-20">Menu Location</div>
+              <div class="col col-20"></div>
+
+              
+          </ion-item>
+          <ion-item ng-repeat="kot in kots" ng-click="showKot(kot)"  >
+              <div class="row">
+              <div class="col col-20">{{kot.KOTNO}}</div>
+              <div class="col col-20">{{kot.TableNO}}</div>
+              <div class="col col-20">{{kot.location}}</div>
+              <div class="col col-20">{{kot.location}}</div>
+              <div class="col col-20"></div>
+              </div>
+          </ion-item>
+          
+      </ion-list>
+      
+  </ion-content>
+</ion-view>

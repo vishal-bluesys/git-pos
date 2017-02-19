@@ -1,0 +1,24 @@
+
+ <ion-view class="modal menumodal"  overflow-scroll = "false"  >
+        <ion-header-bar class="bar bar-header bar-royal">
+          <h1 class="title">Guest Details</h1>
+                       <button class="button  buttons-right button-royal icon ion-close" ng-click="closeModaldetails()"></button>
+        </ion-header-bar>
+    <ion-content overflow-scroll = "false">
+      
+	  <div class="row"><div class="col cols"> Room No : {{guest.Room_No}}</div><div class="col cols">Folio : {{guest.Folio_Id}}</div></div>
+	  <div class="row"><div class="col cols"> Guest Name : {{guest.Guest_Salutation}} {{guest.Guest_Name}}</div>  <div class="col cols">Plan : {{guest.Plan_Package}}</div> </div>
+	  <div class="row"><div class="col cols">Holiding Date  : {{guest.Holding_Date}}</div> </div>
+	  <div class="row"> <div class="col cols">Arrival Date : {{guest.Arrival_Date}} : {{guest.Arrival_Time}}</div>
+						<div class="col cols">Departure date : {{guest.Departure_Date}} : {{guest.Departure_Time}}</div></div>
+	  <div class="row"><div class="col cols"> Guest Type : {{guest.Guest_Type}}</div><div class="col cols"> Person : {{guest.Persons}}</div></div>
+	  <div class="row"><div class="col cols">Payment Instruction : {{guest.Payment_Mode}}</div></div>
+	  <div class="row"><div class="col cols">Special Instruction : {{guest.Special_Instr}}</div></div>
+	  
+	  <a class="button button-positive" ng-click="addGuestdetails(guest)"> Ok </a>
+	  
+	    
+	
+    
+    </ion-content>
+  </ion-view>

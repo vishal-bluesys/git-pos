@@ -1,0 +1,25 @@
+
+ <ion-view class="modal menumodal"  overflow-scroll = "false"  >
+        <ion-header-bar class="bar bar-header bar-royal">
+          <h1 class="title">Guest List</h1>
+                       <button class="button  buttons-right button-royal icon ion-close" ng-click="closeModalroom()"></button>
+        </ion-header-bar>
+    <ion-content overflow-scroll = "false">
+      <ion-list>
+	  <ion-item class="list-divider row">
+	   <div class="col cols">#</div>
+	   <div class="col cols">Folio</div>
+	   <div class="col cols">Guest</div>
+	   <div class="col cols">Plan</div>
+	  
+	  </ion-item>
+	   <ion-item ng-repeat="guest in guests" ng-click="showDetails(guests)" class="row">
+	  <div class="col cols">{{guest.Room_No}}</div>
+	  <div class="col cols">{{guest.Folio_Id}}</div>
+	  <div class="col cols">{{guest.Guest_Salutation}} {{guest.Guest_Name}}</div>
+	  <div class="col cols">{{guest.Plan_Package}}</div>
+	    </ion-item>
+	  </ion-list>
+    
+    </ion-content>
+  </ion-view>

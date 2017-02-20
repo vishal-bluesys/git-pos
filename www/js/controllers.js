@@ -350,6 +350,7 @@ $scope.kotmenus = [];
 	 $scope.kotmenus[index].Kotmodified_flag= 0;
 	 $scope.kotmenus[index].RejQuatity= 0;
 	 $scope.kotmenus[index].modifier= '';
+	 $scope.kotmenus[index].RejReason= '';
 	 $scope.amount[index]=$scope.kotmenus[index].Rate*value;
 	 $scope.kotmenus[index].amount = $scope.kotmenus[index].Rate*value;
 	 console.log($scope.qty);

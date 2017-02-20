@@ -27,6 +27,7 @@
 		<label class="item item-select">
 		  <span class="input-select">Captain  </span>
               <select name="location" ng-model="data.captain"  ng-options="captain.EmployeeName for captain in captains track by captains.EmployeeCode">
+			  <option value="" selected >None</option> 
 			  
 			  
 			  </select>
@@ -141,7 +142,7 @@
 			 <div class="col cols"><input type="number" size="2" ng-model='qty[$index]' style="width: 90px;" ng-Change="addSum(qty[$index],$index)" ></div>
 		   <div class="col cols"> {{kotmenu.Rate}}  <input type="hidden" name="rate[]" ng-model='rate[$index]' value="{{kotmenu.Rate}}" > </div>
 		   <div class="col cols"> {{kotmenu.Rate * qty[$index]}} <input type="hidden"  name="amount[]"ng-model='amount[$index]' value="{{kotmenu.Rate * qty[$index]}}" ></div>
-		   <div class="col cols">{{data.kotno}}</div>
+		   <div class="col cols">{{data.kotno}} <input type="hidden"  name="kotNo[]" ng-model='kotNo[$index]' value="{{data.kotno}}" ></div>
    
   
    </div>

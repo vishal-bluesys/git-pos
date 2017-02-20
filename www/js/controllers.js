@@ -72,7 +72,7 @@ angular.module('starter.controllers', [])
 	
 })
 
-.controller('dashboardCtrl',function($scope,$state,$http, $stateParams,BASE_URL, $window ,$ionicModal ,$ionicLoading,$ionicPopup, $ionicActionSheet,Dataservice,Listservice, NodePushServer){
+.controller('dashboardCtrl',function($scope,$state,$http, $stateParams,BASE_URL, $window ,$ionicModal ,$ionicLoading,$ionicPopup, $ionicActionSheet,Dataservice,Listservice, Authentication, NodePushServer){
      
          // call for location service
          Listservice.getLocation(function(data) {   
@@ -142,7 +142,7 @@ angular.module('starter.controllers', [])
 
 
  };
- $scope.modifier=[];
+ $scope.modifier={};
   $scope.onHold=function(menuIndex){
 	  
 	   $ionicActionSheet.show({
@@ -178,8 +178,8 @@ angular.module('starter.controllers', [])
 	  
 	  
   };
-  
-  $scope.addmodifier= function(data){
+   $scope.modifier={};
+  $scope.addmodifier= function(index){
        var myPopup = $ionicPopup.show({
     template: '<input type="text" ng-model="data.modifier">',
     title: 'Enter Modifier',
@@ -195,7 +195,12 @@ angular.module('starter.controllers', [])
             //don't allow the user to close unless he enters wifi password
             e.preventDefault();
           } else {
-             $scope.modifier[data] = $scope.data.modifier;
+			  console.log(index);
+			  key=index;
+			    // var modifier = { key : $scope.data.modifier};
+            // $scope.modifier[key]  = $scope.data.modifier;
+			//$scope.modifier.push(modifier);
+			$scope.kotmenus[key].modifier = $scope.data.modifier;
              console.log($scope.modifier);
              return  $scope.data.modifier;
           }
@@ -341,6 +346,10 @@ $scope.kotmenus = [];
 	 //console.log();
 	 $scope.qty[index]=value;
 	 $scope.kotmenus[index].qty=value;
+	 $scope.kotmenus[index].Kotno= $scope.data.kotno;
+	 $scope.kotmenus[index].Kotmodified_flag= 0;
+	 $scope.kotmenus[index].RejQuatity= 0;
+	 $scope.kotmenus[index].modifier= '';
 	 $scope.amount[index]=$scope.kotmenus[index].Rate*value;
 	 $scope.kotmenus[index].amount = $scope.kotmenus[index].Rate*value;
 	 console.log($scope.qty);
@@ -358,7 +367,7 @@ $scope.kotmenus = [];
   $scope.submitKOT = function(){
 	 // console.log($scope.kotmenus);;
           $scope.kotdata={};
-	 $scope.kotdata.locationcode = $scope.data.location.LocationCode;
+	 $scope.kotdata.locationcode = $scope.data.locationselected.LocationCode;
 	 $scope.kotdata.KotItem = $scope.kotmenus;
 	 $scope.kotdata.TableNo = $scope.data.tableNo;
 	 $scope.kotdata.KOTNo = $scope.data.kot;
@@ -375,19 +384,24 @@ $scope.kotmenus = [];
          $scope.kotdata.compresoncode =  'NULL';
           }
 	 $scope.kotdata.covers = $scope.data.covers;
-	 $scope.kotdata.captaincode = ($scope.captain)? $scope.employe.EmployeeCode : 'NULL';
-	 $scope.kotdata.captainname = ($scope.captain)? $scope.employe.EmployeeName : 'NULL';
-         $scope.kotdata.stewardcode =	($scope.steward)? $scope.employe.EmployeeCode : 'NULL';  
-         $scope.kotdata.stewardname = ($scope.steward)? $scope.employe.EmployeeName : 'NULL';
+	 $scope.kotdata.captain = $scope.data.captain
+	 $scope.kotdata.stewardcode = $scope.data.steward
+     //$scope.kotdata.stewardname = ($scope.steward)? $scope.employe.EmployeeName : 'NULL';
 	 $scope.kotdata.menuLocationcode = $scope.data.menulocation;
 	
 	 $scope.kotdata.guest = $scope.data.guest;
 	 $scope.kotdata.Room_No = $scope.data.roomno;
 	 $scope.kotdata.Room_folio = $scope.data.folio;
+	 user = Authentication.getuserCredential();
+	   //console.log(user[0]);
+	  $scope.kotdata.username = user[0].UserName;
+	
+	 
+	 
          var request = {
                     method: "POST",
-                    url: BASE_URL+"/saveKot",
-                    headers: {'content-type': 'application/json; charset=UTF-8','Authorization': 'bearer'},
+                    url: BASE_URL+"/hotsys/saveKot",
+                  //  headers: {'content-type': 'application/json; charset=UTF-8','Authorization': 'bearer'},
                     data: $scope.kotdata
                      };
          $http(request).then(function(data){console.log(data)});

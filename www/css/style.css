@@ -30,6 +30,49 @@
     
 
 }
+
+.dash{
+    margin: auto;
+    position: absolute;
+    left: 40%;
+    top: 50px;
+    width: 20%;
+}
+
+.table-occupied{
+	background:red;
+	color:white;
+	
+}
+.table-not-occupied{
+	background:green;
+	color:white;
+	
+}
+.tables{
+	 margin: auto;
+    position: absolute;
+    left: 40%;
+    top: 50px;
+    width: 40%;
+}
+
+
+.tables > a{
+	width:50px;
+	height:50px;
+	float:left;
+	padding: 10px;
+	margin-left:5px;
+	margin-top:10px;
+
+	
+}
+.scroll-content{
+   background-color : rgba(251, 217, 2, 0.31);
+ 
+
+  }
 /*.login input[type="text"], .login input[type="password"] {
     border-bottom: 1px solid #FFFFFF;
     border-left: none;
@@ -39,11 +82,7 @@
      color:black;
 }
 
-.login .scroll-content{
-   background : url('../img/loginbg.jpg');
- background-size: 400% 110%;
 
-  }
 .login input, .login .item-input, .login .item-input-wrapper {
     background-color: rgba(244, 244, 244, 0) !important;
     color: whitesmoke;

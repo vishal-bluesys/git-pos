@@ -317,6 +317,16 @@ angular.module('starter')
 			});
               
           };
+		    
+			this.getTable = function(callback){
+                $http.get(BASE_URL+'/hotsys/getTable').then(function(response){
+			 callback(response.data);
+                console.log(response.data);
+                   
+			});
+              
+          };
+		  
               this.getKotno = function(callback){
                 $http.get(BASE_URL+'/hotsys/getKotno').then(function(response){
 			 callback(response.data);

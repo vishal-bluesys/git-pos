@@ -88,8 +88,65 @@ angular.module('starter', ['ionic','ionic-toast','starter.controllers','starter.
       views: {
         'menuContent': {
           templateUrl: 'templates/dashboard.html',
+         
+        }
+      }
+    })
+	
+	 .state('app.kot', {
+      url: '/kot',
+      cache:false,
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/kot.html',
           controller: 'dashboardCtrl'
         }
+      }
+    })
+	
+  .state('app.location', {
+      url: '/location',
+	   cache:true,
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/location.html',
+		  controller: function($scope,Listservice, $ionicLoading){
+			   $ionicLoading.show();
+			  Listservice.getLocation(function(data) {  
+				$ionicLoading.hide();			  
+			$scope.locations=data;
+             });
+			 
+			 $scope.save=function(data){
+				 
+				 localStorage.setItem('location',JSON.stringify(data));
+				 
+			 }
+		  }
+        }
+      }
+    })
+	  
+   .state('app.tables', {
+      url: '/tables',
+      cache:false,
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/tables.html',
+          controller: function($scope,Listservice,$ionicLoading){
+			  $ionicLoading.show();
+			  Listservice.getTable(function(data) {   
+			  $ionicLoading.hide();
+			$scope.tables=data;
+             });
+			 
+			 $scope.save=function(data){
+				 
+				 localStorage.setItem('table',data.TableNo);
+				 
+			 }
+		  }
+		}
       }
     })
    .state('app.openkots', {

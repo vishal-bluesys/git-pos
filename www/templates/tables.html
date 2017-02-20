@@ -1,0 +1,13 @@
+<ion-view view-title="Tables">
+  
+  <ion-content overflow-scroll = "false">
+    <div class="tables">
+    <a  ng-repeat="table in tables" class="button"  href="#/app/kot" ng-click="save(table)" data-ng-class="{'table-occupied':table.OccupancyFlag==1}" >
+	{{table.TableNo}}
+	
+	</a>
+    
+    </div> 
+   </ion-content>
+   
+</ion-view>

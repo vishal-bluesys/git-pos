@@ -8,15 +8,18 @@
 	<label class="item item-select">
 		     <span class="input-select">Location </span>
               <select name="location" ng-model="data.menulocation" ng-change="onLocactionChange(data.menulocation)">
-			    <option value="{{data.location.MenuLocationCode1}}" ng-if="data.location.MenuLocationCode1">{{data.location.MenuLocationCode1}}</option>
-			    <option value="{{data.location.MenuLocationCode2}}" ng-if="data.location.MenuLocationCode2">{{data.location.MenuLocationCode2}}</option>
-			    <option value="{{data.location.MenuLocationCode3}}" ng-if="data.location.MenuLocationCode3">{{data.location.MenuLocationCode3}}</option>
+			    <option value="{{data.locationselected.MenuLocationCode1}}" ng-if="data.locationselected.MenuLocationCode1">{{data.locationselected.MenuLocationCode1}}</option>
+			    <option value="{{data.locationselected.MenuLocationCode2}}" ng-if="data.locationselected.MenuLocationCode2">{{data.locationselected.MenuLocationCode2}}</option>
+			    <option value="{{data.locationselected.MenuLocationCode3}}" ng-if="data.locationselected.MenuLocationCode3">{{data.locationselected.MenuLocationCode3}}</option>
 			  
 			  </select>
 		    </label>
      <ion-scroll zooming="true"  direction="x" scrollbar-y="false" style=" height:auto" overflow-scroll = "false"  >
 	      	   
               <div class="row">
+			   <div class="col cols menuCategories"  ng-click="getallmenus('all')">
+			   All Categories
+			 </div>
              <div class="col cols menuCategories" ng-repeat="menuCategory in menuCategories" ng-click="getmenus(menuCategory.CategoryCode)">
 			   {{menuCategory.CategoryName}}
 			 </div>

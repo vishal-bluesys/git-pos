@@ -104,6 +104,8 @@ angular.module('starter.controllers', [])
              });
 					
 	$scope.data={};
+	$scope.data.tableNo = localStorage.getItem('table');
+	$scope.data.locationselected = JSON.parse(localStorage.getItem('location'));
 
 	$scope.showactions = function() {
 
@@ -180,7 +182,7 @@ angular.module('starter.controllers', [])
   $scope.addmodifier= function(data){
        var myPopup = $ionicPopup.show({
     template: '<input type="text" ng-model="data.modifier">',
-    title: 'Enter Wi-Fi Password',
+    title: 'Enter Modifier',
     subTitle: 'Please use normal things',
     scope: $scope,
     buttons: [

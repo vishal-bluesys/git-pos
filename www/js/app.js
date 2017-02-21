@@ -143,6 +143,7 @@ angular.module('starter', ['ionic','ionic-toast','starter.controllers','starter.
 			 $scope.save=function(data){
 				 
 				 localStorage.setItem('table',data.TableNo);
+				 localStorage.setItem('OccupancyFlag',data.OccupancyFlag);
 				 
 			 }
 		  }

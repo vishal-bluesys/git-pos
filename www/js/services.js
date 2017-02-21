@@ -337,25 +337,17 @@ angular.module('starter')
           };
           var data=[];
             this.getKots = function(callback){
-                var username=localStorage.getItem('username');
-                
-                /*
-                $http.get(BASE_URL+'/hotsys/getKots').then(function(response){
-			 callback(response.data);
-                //console.log(response.data);
+                var table=localStorage.getItem('table');
+                              
+               
+					$http.get(BASE_URL+'/hotsys/openKot/'+table).then(function(response){
+					callback(response.data);
+                  
                    
-			});*/
-                data = [
-                    {"KOTNO":"1","location":"LUME",'GUEST':'VISHAL',"TableNO":"1"},
-                    {"KOTNO":"2","location":"LUME",'GUEST':'Sampat',"TableNO":"3"},
-                    {"KOTNO":"3","location":"LUME",'GUEST':'Prasad',"TableNO":"4"}
-                    
-                ];
-                
-                //console.log(data);
-                    
-                 callback(data);//return data;    
-          
+				});
+					
+				                
+               
                 
               
            };

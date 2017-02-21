@@ -135,6 +135,18 @@
    
   
    </div>
+     <div class="row kotmenu" ng-repeat ="openkotmenu in openKots"  on-hold="onHoldopen($index)" ng-if="OccupancyFlag">
+		   <div class="col cols">{{openkotmenu.LocationCode}} </div>
+		   <div class="col cols">{{openkotmenu.MenuItemCode}} </div>
+		   <div class="col cols">{{openkotmenu.MenuItemName}} </div>
+			 <div class="col cols">{{openkotmenu.Quantity}}</div>
+		   <div class="col cols"> {{openkotmenu.Rate}}</div>
+		   <div class="col cols"> {{openkotmenu.NettAmount}} </div>
+		   <div class="col cols">{{openkotmenu.KOTNo}}</div>
+   
+  
+   </div>
+   
    <div class="row kotmenu" ng-repeat ="kotmenu in kotmenus"  on-hold="onHold($index)">
 		   <div class="col cols">{{kotmenu.LocationCode}} </div>
 		   <div class="col cols">{{kotmenu.MenuItemCode}} </div>
@@ -149,11 +161,11 @@
    </div>
 	<div class="row kottotal" >
    <div class="col cols">Total Items </div>
-   <div class="col cols"> {{kotmenus.length}}</div>
+   <div class="col cols"> {{totalItem}}</div>
    <div class="col cols">Qty </div>
-   <div class="col cols"> {{totalqty}} </div>
+   <div class="col cols"> {{totalqty+tqty}} </div>
    <div class="col cols"> Total Amount</div>
-   <div class="col cols"> {{totalSum}} </div>
+   <div class="col cols"> {{totalSum + total}} </div>
    <div class="col cols"> [+] Taxex</div>
    
   

@@ -102,10 +102,33 @@ angular.module('starter.controllers', [])
          Listservice.getKotno(function(data) {   
 			$scope.data.kotno = data;
              });
-					
+				
+         
+        			 
 	$scope.data={};
+	$scope.totalSum=0;
+	$scope.amount=[];
+	$scope.totalqty = 0;
+	$scope.qty=[];
+	$scope.totalItem=0;
 	$scope.data.tableNo = localStorage.getItem('table');
+	$scope.OccupancyFlag =  (localStorage.getItem('OccupancyFlag')==1)? true : false;
 	$scope.data.locationselected = JSON.parse(localStorage.getItem('location'));
+	if($scope.OccupancyFlag){
+		Listservice.getKots(function(data) {   
+			$scope.openKots = data;
+			data.forEach(function(item,value){
+				//console.log(item.Quantity); NettAmount  
+				$scope.totalSum = parseFloat($scope.totalSum + item.NettAmount);
+				$scope.totalqty = parseInt($scope.totalqty + item.Quantity);
+				$scope.totalItem = $scope.totalItem+1; 
+			});
+			
+			
+             });	
+		 	 
+     	
+	}
 
 	$scope.showactions = function() {
 
@@ -178,6 +201,83 @@ angular.module('starter.controllers', [])
 	  
 	  
   };
+  
+  $scope.onHoldopen=function(menuIndex){
+	  
+	   $ionicActionSheet.show({
+     buttons: [
+      
+       { text: 'Modify Kot' },
+       { text: 'Cancel Menu' },
+      
+    
+     ],
+    
+     titleText: 'Action on KOTS',
+     cancelText: 'Cancel',
+     cancel: function() {
+          // add cancel code..
+        },
+     buttonClicked: function(index) {
+         if(index==0){
+             
+            $scope.modifyKotpopup(menuIndex);
+          // console.log($scope.modifier);
+              return true;
+         }
+           if(index==1){
+             
+            $scope.removeItem(menuIndex);
+          // console.log($scope.modifier);
+              return true;
+         }
+       return true;
+     }
+   });
+	  
+	  
+  };
+  
+    $scope.modifyKotpopup= function(index){
+       var myPopup = $ionicPopup.show({
+    template: '<input type="text" ng-model="data.Quantity" placeholder="Quantity"><br/><input type="text" ng-model="data.RejQuantity" placeholder="Rejected Quantity"><br/><input type="text" ng-model="data.RejReason" Placeholder= "Rejection Reason">',
+              
+    title: 'Enter Modifier',
+    subTitle: 'Please use normal things',
+    scope: $scope,
+    buttons: [
+      { text: 'Cancel' },
+      {
+        text: '<b>Save</b>',
+        type: 'button-positive',
+        onTap: function(e) {
+          if (!$scope.data.Quantity) {
+            //don't allow the user to close unless he enters wifi password
+            e.preventDefault();
+          } else {
+			  console.log(index);
+			  key=index;
+			    // var modifier = { key : $scope.data.modifier};
+            // $scope.modifier[key]  = $scope.data.modifier;
+			//$scope.modifier.push(modifier);
+			$scope.openKots[key].Quantity = $scope.data.Quantity;
+			$scope.openKots[key].RejectionQuantity = $scope.data.RejQuantity;
+			$scope.openKots[key].RejectionReason = $scope.data.RejReason;
+			$scope.openKots[key].NettAmount = $scope.openKots[key].Rate * $scope.data.Quantity;
+            $scope.totalqty = parseInt($scope.totalqty - $scope.data.RejQuantity);
+			$scope.totalSum =  parseFloat($scope.totalSum - $scope.openKots[key].NettAmount)
+             return true;
+          }
+        }
+      }
+    ]
+  });
+    
+      
+      return myPopup;
+  };
+  
+  
    $scope.modifier={};
   $scope.addmodifier= function(index){
        var myPopup = $ionicPopup.show({
@@ -335,13 +435,11 @@ $scope.kotmenus = [];
  $scope.addTOkot = function(menu){
 	 
 	  $scope.kotmenus.push(menu);
-	  
+	  $scope.totalItem = $scope.totalItem + 1;
     console.log($scope.kotmenus);
 	 
  } 
- $scope.totalSum=0;
- $scope.amount=[];
- $scope.qty=[];
+ 
  $scope.addSum = function(value,index){
 	 //console.log();
 	 $scope.qty[index]=value;
@@ -356,12 +454,15 @@ $scope.kotmenus = [];
 	 console.log($scope.qty);
 	// $scope.totalSum = $scope.totalSum+$scope.kotmenus[index].Rate*value
 	 //$scope.totalSum = $scope.totalSum+value;
-	 $scope.totalSum = $scope.amount.reduce(function(prev, cur) {
+	 $scope.total =  parseFloat($scope.amount.reduce(function(prev, cur) {
 										return prev + cur;
-								});
-	  $scope.totalqty=$scope.qty.reduce(function(prev, cur) {
+								}));
+	 // $scope.totalSum =  parseInt($scope.totalSum) + parseInt($scope.total);
+	  
+	  $scope.tqty =  parseInt($scope.qty.reduce(function(prev, cur) {
 										return prev + cur;
-								});
+								}));
+	// $scope.totalqty = parseInt($scope.totalqty) + parseInt($scope.tqty);
  };
 
   
@@ -376,7 +477,7 @@ $scope.kotmenus = [];
 	 $scope.kotdata.shiftNo = localStorage.getItem('shift');
 	 $scope.kotdata.meal = localStorage.getItem('meal');
          if($scope.data.complementry===true){
-	 $scope.kotdata.departmentcode = ($scope.department)? $scope.department.DepartmentCode: 'NULL';
+		 $scope.kotdata.departmentcode = ($scope.department)? $scope.department.DepartmentCode: 'NULL';
          $scope.kotdata.EmployeCode =  ($scope.employe)? $scope.employe.EmployeeCode : 'NULL';  
          $scope.kotdata.compresoncode = ($scope.data.reason.ReasonCode)? $scope.data.reason.ReasonCode : 'NULL';
           }else{

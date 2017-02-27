@@ -63,7 +63,7 @@ angular.module('starter', ['ionic','ionic-toast','starter.controllers','starter.
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-      PushNotificationsService.register();
+    //  PushNotificationsService.register();
   });
 })
 

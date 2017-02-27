@@ -61,7 +61,7 @@ angular.module('starter.controllers', [])
 	
 	 $http.get(BASE_URL+'/hotsys/getshift').then(function(response){
 					   //console.log(response);
-					   alert(response);
+					  // alert(response);
                    $scope.shifts = response.data;
                    
 					});
@@ -495,7 +495,13 @@ $scope.kotmenus = [];
   $scope.submitKOT = function(){
 	 // console.log($scope.kotmenus);;
           $scope.kotdata={};
-    
+     if($scope.modifiedKOTS==null || $scope.modifiedKOTS.length<=0){
+		 alert("You have not added or edited items");
+		 return true;
+	 }else if($scope.kotmenus==null || $scope.kotmenus.length<=0){
+		 alert("You have not added items");
+		 return true;
+	 }
      $scope.kotdata.openKots = $scope.modifiedKOTS;
 	  
 	 $scope.kotdata.locationcode = $scope.data.locationselected.LocationCode;

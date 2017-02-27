@@ -1,7 +1,20 @@
 <ion-view view-title="KOT">
+<ion-nav-bar class="bar-positive" align-title="center">
+<ion-nav-back-button class="button-clear">
+			<i class="ion-arrow-left-c"></i> Tables
+  </ion-nav-back-button>
+   <ion-nav-buttons side="left">
+   <a  href ="#/app/dashboard" class="button button-icon icon ion-ios-home"></a>
+		
+   </ion-nav-buttons >
    <ion-nav-buttons side="right">
+		
+        
+		<button class=" button button-icon icon ion-ios-printer-outline " ng-click="submitKOT()"> </button>
         <button class=" button button-icon icon ion-android-more-vertical" ng-click="showactions()"></button>
+        
     </ion-nav-buttons>
+	</ion-nav-bar >
   <ion-content overflow-scroll = "false">
     <form name="kotform" id="kotform" method="post">
   

@@ -39,7 +39,7 @@
 		 </label>
 		<label class="item item-select">
 		  <span class="input-select">Captain  </span>
-              <select name="location" ng-model="data.captain"  ng-options="captain.EmployeeName for captain in captains track by captains.EmployeeCode">
+              <select name="location" ng-model="data.captain"  ng-options="captain.EmployeeName for captain in captains track by captain.EmployeeName">
 			  <option value="" selected >None</option> 
 			  
 			  
@@ -47,7 +47,7 @@
 		 </label>
 	   <label class="item item-select" >
 		  <span class="input-select">Steward </span>
-              <select name="location" ng-model="data.steward"  ng-options="steward.EmployeeName for steward in stewards track by steward.EmployeeCode">
+              <select name="location" ng-model="data.steward"  ng-options="steward.EmployeeName for steward in stewards track by steward.EmployeeName">
 			  
 			  
 			  </select>

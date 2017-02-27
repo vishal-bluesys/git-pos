@@ -1,8 +1,12 @@
 <ion-view view-title="Location">
-  
+  <ion-nav-bar class="bar-positive" align-title="center">
+<ion-nav-back-button class="button-clear">
+			<i class="ion-arrow-left-c"></i> Home
+  </ion-nav-back-button>
+</ion-nav-bar >
   <ion-content overflow-scroll = "false">
     <div class="dash">
-    <a class="button button-block button-positive" ng-repeat="location in locations"  href="#/app/tables"  ng-click="save(location)"> {{location.LocationName}} </a>
+    <a class="button button-block button-positive" ng-repeat="location in locations"  href="#/app/tables/{{parameter}}"  ng-click="save(location)"> {{location.LocationName}} </a>
     
     </div> 
    </ion-content>

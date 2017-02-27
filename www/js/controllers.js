@@ -119,13 +119,19 @@ angular.module('starter.controllers', [])
 		Listservice.getKots(function(data) {   
 			$scope.openKots = data;
 			console.log(data);
-			$scope.openKots.forEach(function(item,value){
-				//console.log(item.Quantity); NettAmount  
+			$scope.data.menulocation = $scope.openKots[0].LocationCode;
+				$scope.data.captain = $scope.openKots[0].CaptianName;
+				$scope.data.steward = $scope.openKots[0].StewardName;
+				$scope.data.covers = parseInt($scope.openKots[0].Covers);
+				$scope.onLocactionChange($scope.data.menulocation)
+				$scope.openKots.forEach(function(item,value){
+				//console.log(item.Quantity); 
 				$scope.totalSum = parseFloat($scope.totalSum + item.NettAmount);
 				$scope.totalqty = parseInt($scope.totalqty + item.Quantity);
 				$scope.totalItem = $scope.totalItem+1; 
-				console.log(value);
+				//console.log(value);
 				$scope.openKots[value].KOTModifyFlag='N';
+				
 			});
 			
 			
@@ -134,11 +140,6 @@ angular.module('starter.controllers', [])
      	
 	}
 	
-	$scope.getallmenus = function(category){
-		
-		
-		
-	}
 
 	$scope.showactions = function() {
 

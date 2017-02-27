@@ -1,12 +1,20 @@
 <ion-view view-title="Tables">
+  <ion-nav-bar class="bar-positive" align-title="center">
+<ion-nav-back-button class="button-clear">
+			<i class="ion-arrow-left-c"></i> Locations
+  </ion-nav-back-button>
+</ion-nav-bar >
   
   <ion-content overflow-scroll = "false">
     <div class="tables">
-    <a  ng-repeat="table in tables" class="button"  href="#/app/kot" ng-click="save(table)" data-ng-class="{'table-occupied':table.OccupancyFlag==1}" >
+    <a  ng-repeat="table in tables" class="button"  ng-if="kot" href="#/app/kot" ng-click="save(table)" data-ng-class="{'table-occupied':table.OccupancyFlag==1}" >
 	{{table.TableNo}}
 	
 	</a>
-    
+    <a  ng-repeat="table in tables" class="button"  ng-if="bill" href="#/app/bill" ng-click="save(table)" data-ng-class="{'table-occupied':table.OccupancyFlag==1}" >
+	{{table.TableNo}}
+	
+	</a>
     </div> 
    </ion-content>
    

@@ -105,12 +105,13 @@ angular.module('starter', ['ionic','ionic-toast','starter.controllers','starter.
     })
 	
   .state('app.location', {
-      url: '/location',
+      url: '/location/:type',
 	   cache:true,
       views: {
         'menuContent': {
           templateUrl: 'templates/location.html',
-		  controller: function($scope,Listservice, $ionicLoading){
+		  controller: function($scope,Listservice, $ionicLoading,$stateParams){
+			  $scope.parameter = $stateParams.type;
 			   $ionicLoading.show();
 			  Listservice.getLocation(function(data) {  
 				$ionicLoading.hide();			  
@@ -128,12 +129,21 @@ angular.module('starter', ['ionic','ionic-toast','starter.controllers','starter.
     })
 	  
    .state('app.tables', {
-      url: '/tables',
+      url: '/tables/:type',
       cache:false,
       views: {
         'menuContent': {
           templateUrl: 'templates/tables.html',
-          controller: function($scope,Listservice,$ionicLoading){
+          controller: function($scope,Listservice,$ionicLoading,$stateParams){
+			  var type=$stateParams.type;
+			  console.log(type);
+			  if(type=='b'){
+				  $scope.bill=true;
+				  $scope.kot=false;
+			  }else{
+				  $scope.bill=false;
+				  $scope.kot= true;
+			  }
 			  $ionicLoading.show();
 			  Listservice.getTable(function(data) {   
 			  $ionicLoading.hide();

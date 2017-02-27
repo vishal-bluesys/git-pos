@@ -61,6 +61,7 @@ angular.module('starter.controllers', [])
 	
 	 $http.get(BASE_URL+'/hotsys/getshift').then(function(response){
 					   //console.log(response);
+					   alert(response);
                    $scope.shifts = response.data;
                    
 					});

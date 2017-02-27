@@ -14,6 +14,7 @@
               <input type="password"  name="password" placeholder="Password" ng-model="data.password" required>
                <span class="error" ng-show="( login.password.$dirty || submitted  ) && login.password.$error.required">Password is required </span>
           </label> 
+		  {{shifts}}
 	      <label class="item item-select ">
 		  <span class="input-select">Shift No </span>
               <select name="shift" ng-model="data.shift"  ng-options="shift.ShiftName for shift in shifts track by shifts.ShiftNo" required>

@@ -117,11 +117,14 @@ angular.module('starter.controllers', [])
 	if($scope.OccupancyFlag){
 		Listservice.getKots(function(data) {   
 			$scope.openKots = data;
-			data.forEach(function(item,value){
+			console.log(data);
+			$scope.openKots.forEach(function(item,value){
 				//console.log(item.Quantity); NettAmount  
 				$scope.totalSum = parseFloat($scope.totalSum + item.NettAmount);
 				$scope.totalqty = parseInt($scope.totalqty + item.Quantity);
 				$scope.totalItem = $scope.totalItem+1; 
+				console.log(value);
+				$scope.openKots[value].KOTModifyFlag='N';
 			});
 			
 			
@@ -129,17 +132,23 @@ angular.module('starter.controllers', [])
 		 	 
      	
 	}
+	
+	$scope.getallmenus = function(category){
+		
+		
+		
+	}
 
 	$scope.showactions = function() {
 
    // Show the action sheet
    var hideSheet = $ionicActionSheet.show({
      buttons: [
-       { text: 'Open KOTS' },
-       { text: 'Unsetteled Bills' },
+      // { text: 'Open KOTS' },
+     //  { text: 'Unsetteled Bills' },
        { text: 'Save N Print' },
-       { text: 'Print Bill' },
-       { text: 'Settle' },
+    //   { text: 'Print Bill' },
+    //   { text: 'Settle' },
        { text: 'Save N Exit' }
     
      ],
@@ -154,9 +163,14 @@ angular.module('starter.controllers', [])
 			$scope.openModalmodalkots();
                         return true;
 		}  
-        if(index==5){
-			$scope.submitKOT();
-                        return true;
+        if(index==1){
+		
+			$ionicLoading.show();
+				$scope.submitKOT()
+				$ionicLoading.hide();
+				return true;	
+		
+            
 		} 
 	  
      }
@@ -237,7 +251,7 @@ angular.module('starter.controllers', [])
 	  
 	  
   };
-  
+  	$scope.modifiedKOTS=[];
     $scope.modifyKotpopup= function(index){
        var myPopup = $ionicPopup.show({
     template: '<input type="text" ng-model="data.Quantity" placeholder="Quantity"><br/><input type="text" ng-model="data.RejQuantity" placeholder="Rejected Quantity"><br/><input type="text" ng-model="data.RejReason" Placeholder= "Rejection Reason">',
@@ -263,9 +277,15 @@ angular.module('starter.controllers', [])
 			$scope.openKots[key].Quantity = $scope.data.Quantity;
 			$scope.openKots[key].RejectionQuantity = $scope.data.RejQuantity;
 			$scope.openKots[key].RejectionReason = $scope.data.RejReason;
-			$scope.openKots[key].NettAmount = $scope.openKots[key].Rate * $scope.data.Quantity;
+			$scope.openKots[key].NettAmount =  $scope.openKots[key].Rate * $scope.data.Quantity;
+			$scope.openKots[key].KOTModifyFlag = 'Y';
+			$scope.Rejamount =  $scope.openKots[key].Rate * $scope.data.RejQuantity;
+			
             $scope.totalqty = parseInt($scope.totalqty - $scope.data.RejQuantity);
-			$scope.totalSum =  parseFloat($scope.totalSum - $scope.openKots[key].NettAmount)
+			$scope.totalSum =  parseFloat($scope.totalSum - $scope.Rejamount);
+			$scope.modifiedKOTS.push($scope.openKots[key]);
+			
+			console.log($scope.modifiedKOTS);
              return true;
           }
         }
@@ -337,6 +357,11 @@ angular.module('starter.controllers', [])
   }  
   
   $scope.getmenus = function(data){
+	   if(data.menulocation==""){
+		   alert("please select menu location");
+		   return true;
+	   }
+	    
 	   $ionicLoading.show();
 	    $scope.menus={};
 	  console.log(data);
@@ -469,10 +494,13 @@ $scope.kotmenus = [];
   $scope.submitKOT = function(){
 	 // console.log($scope.kotmenus);;
           $scope.kotdata={};
+    
+     $scope.kotdata.openKots = $scope.modifiedKOTS;
+	  
 	 $scope.kotdata.locationcode = $scope.data.locationselected.LocationCode;
 	 $scope.kotdata.KotItem = $scope.kotmenus;
 	 $scope.kotdata.TableNo = $scope.data.tableNo;
-	 $scope.kotdata.KOTNo = $scope.data.kot;
+	 $scope.kotdata.KOTNo = $scope.data.kotno;
 	 $scope.kotdata.complementoryKot = ($scope.data.complementry===true)? 1 : 0;
 	 $scope.kotdata.shiftNo = localStorage.getItem('shift');
 	 $scope.kotdata.meal = localStorage.getItem('meal');
@@ -492,6 +520,7 @@ $scope.kotmenus = [];
 	 $scope.kotdata.menuLocationcode = $scope.data.menulocation;
 	
 	 $scope.kotdata.guest = $scope.data.guest;
+	 $scope.kotdata.roomguest = $scope.data.guestname;
 	 $scope.kotdata.Room_No = $scope.data.roomno;
 	 $scope.kotdata.Room_folio = $scope.data.folio;
 	 user = Authentication.getuserCredential();

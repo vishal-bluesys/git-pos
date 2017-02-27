@@ -5,8 +5,13 @@
                        <button class="button  buttons-right button-royal icon ion-close" ng-click="closeModal()"></button>
         </ion-header-bar>
     <ion-content overflow-scroll = "false">
-	<label class="item item-select">
-		     <span class="input-select">Location </span>
+	<div class="row">
+	<label class="item item-input col col-50">
+	 <span class="input-label">Location : </span>
+	   {{data.locationselected.LocationName}}
+	</label>
+	<label class="item item-select col col-50">
+		     <span class="input-select">Menu Location </span>
               <select name="location" ng-model="data.menulocation" ng-change="onLocactionChange(data.menulocation)">
 			    <option value="{{data.locationselected.MenuLocationCode1}}" ng-if="data.locationselected.MenuLocationCode1">{{data.locationselected.MenuLocationCode1}}</option>
 			    <option value="{{data.locationselected.MenuLocationCode2}}" ng-if="data.locationselected.MenuLocationCode2">{{data.locationselected.MenuLocationCode2}}</option>
@@ -14,10 +19,11 @@
 			  
 			  </select>
 		    </label>
+			</div>
      <ion-scroll zooming="true"  direction="x" scrollbar-y="false" style=" height:auto" overflow-scroll = "false"  >
 	      	   
               <div class="row">
-			   <div class="col cols menuCategories"  ng-click="getallmenus('all')">
+			   <div class="col cols menuCategories"  ng-click="getmenus(0)">
 			   All Categories
 			 </div>
              <div class="col cols menuCategories" ng-repeat="menuCategory in menuCategories" ng-click="getmenus(menuCategory.CategoryCode)">

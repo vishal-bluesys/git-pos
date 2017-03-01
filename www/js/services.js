@@ -253,8 +253,16 @@ angular.module('starter')
 	    this.getMeal = function(){
            return meal;        
        };
-      
-      
+      var discountData = [];
+      this.setDiscountData = function(data){
+		 
+        discountData = data;		 
+		  
+	  }
+	  
+	  this.getDiscountData = function(){
+		  return discountData;
+	  }
       
   })
   
@@ -345,12 +353,25 @@ angular.module('starter')
                   
                    
 				});
-					
-				                
-               
-                
               
            };
+		   
+		 this.getDiscounts=function(callback){
+			 
+			  var disclocation = (JSON.parse(localStorage.getItem('location'))).LocationCode;
+			  $http.get(BASE_URL+'/hotsys/getDiscount?location='+disclocation+'&param=FHRAI').then(function(response){
+				  callback(response.data);
+			  });
+			 
+		 }
+		 
+		 this.getTaxes = function(callback){
+			 var taxlocation = (JSON.parse(localStorage.getItem('location'))).LocationCode;
+			  $http.get(BASE_URL+'/hotsys/getTaxes/'+taxlocation).then(function(response){
+				  callback(response.data);
+			  });
+			 
+		 }
        
   })
 

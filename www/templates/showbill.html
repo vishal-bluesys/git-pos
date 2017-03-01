@@ -1,0 +1,129 @@
+<ion-view view-title="Bill">
+  <ion-nav-bar class="bar-positive" align-title="center">
+<ion-nav-back-button class="button-clear">
+			<i class="ion-arrow-left-c"></i> Tables
+  </ion-nav-back-button>
+</ion-nav-bar >
+  
+  <ion-content overflow-scroll = "false">
+    <div class="row">
+       <div class="col">LOCATION : {{bill_location.LocationCode}}</div>
+       <div class="col">TABLES :  {{tableNo}}</div>
+    </div> 
+	<div ng-if="roomservice">
+	
+							<label class="item item-input ">
+								  <span class="input-label">Room No </span>
+								  <input type="text" ng-model="data.roomno" name="roomno" id="roomno" >
+							</label>
+							<label class="item item-input ">
+								  <span class="input-label">Folio No</span>
+								  <input type="text" ng-model="data.folioNo" name="folioNo" id="folioNo"  >
+							</label>
+		
+		
+					<label class="item item-input">
+								  <span class="input-label">Customer Name</span>
+								  <input type="text" ng-model="data.customerName" name="customerName" id="customerName" >
+							</label>
+		  
+		
+	</div>
+   <div ng-if="banquet">
+	
+							<label class="item item-input ">
+								  <span class="input-label">Name on Bill  </span>
+								  <input type="text" ng-model="data.customerName" name="customerName" id="customerName" value ="" >
+							</label>
+							<label class="item item-input ">
+								  <span class="input-label">Banquet Name</span>
+								  <input type="text" ng-model="data.bnqtname" name="bnqtname" id="bnqtname" value ="">
+							</label>
+	
+		 
+	</div>
+   
+       <ion-checkbox type="checkbox" name="kotwise" id="kotwise" value="kotwise" ng-model="checkboxModel.value1"  ng-click="sortBy('KOTNo')"> KOTWISE</ion-checkbox>
+    
+  
+
+       
+			 <div class="card list">
+				   <div class="item item-divider">
+					  Bill Details
+				   </div>
+				   <div class="item item-text-wrap">
+				      <div class="row kotmenu">
+							   <div class="col cols"> Loc </div>
+							   <div class="col cols">Code </div>
+							   <div class="col cols">Menu Item </div>
+							   <div class="col cols"> Qty</div>
+							   <div class="col cols"> Rate</div>
+							   <div class="col cols"> Value</div>
+							   <div class="col cols"> Kot No</div>
+							</div>
+					
+					     <div class="row kotmenu" ng-repeat ="openkotmenu in openKots | orderBy:kot"  >
+							   <div class="col cols">{{openkotmenu.LocationCode}} </div>
+							   <div class="col cols">{{openkotmenu.MenuItemCode}} </div>
+							   <div class="col cols">{{openkotmenu.MenuItemName}} </div>
+								 <div class="col cols">{{openkotmenu.Quantity}}</div>
+							   <div class="col cols"> {{openkotmenu.Rate}}</div>
+							   <div class="col cols"> {{openkotmenu.NettAmount}} </div>
+							   <div class="col cols">{{openkotmenu.KOTNo}}</div>
+   
+  
+						</div>
+						    <div class="row ">
+							   <div class="col cols">Item</div>
+							   <div class="col cols">{{totalItem}} </div>
+							   <div class="col cols">Qty</div>
+							   <div class="col cols"> {{totalqty}}</div>
+							   <div class="col cols"> Total</div>
+							   <div class="col cols"> {{totalSum}}</div>
+							   
+							</div>
+							   
+							  <div class="row ">
+								   <div class="col cols">&nbsp;</div>
+								   <div class="col cols">&nbsp; </div>
+								   <div class="col cols">&nbsp;</div>
+								   <div class="col cols"> &nbsp;</div>
+								   <div class="col cols"> Discount</div>
+								   <div class="col cols"> {{discount}}</div>
+								  
+							</div>
+							  <div class="row ">
+								   <div class="col cols">&nbsp;</div>
+								   <div class="col cols">&nbsp; </div>
+								   <div class="col cols">&nbsp;</div>
+								   <div class="col cols"> &nbsp;</div>
+								   <div class="col cols"> NettAmount</div>
+								   <div class="col cols"> {{NettAmount}}</div>
+								  
+							</div>
+							<div class="row ">
+								   <div class="col cols">&nbsp;</div>
+								   <div class="col cols">&nbsp; </div>
+								   <div class="col cols">&nbsp;</div>
+								   <div class="col cols"> &nbsp;</div>
+								   <div class="col cols"> TAX </div>
+								   <div class="col cols"> {{taxamount  | number : 2}}</div>
+								   
+							</div>
+							  <div class="row ">
+								   <div class="col cols">&nbsp;</div>
+								   <div class="col cols">&nbsp; </div>
+								   <div class="col cols">&nbsp;</div>
+								   <div class="col cols"> &nbsp;</div>
+								   <div class="col cols"> Final Amount</div>
+								   <div class="col cols"> {{finalAmount}}</div>
+								  
+							</div>
+						
+						</div>
+			 </div>
+			
+   </ion-content>
+   
+</ion-view>

@@ -160,7 +160,28 @@ angular.module('starter', ['ionic','ionic-toast','starter.controllers','starter.
 		}
       }
     })
-   .state('app.openkots', {
+   .state('app.discounts', {
+      url: '/discounts',
+      cache:false,
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/discounts.html',
+          controller: 'discountsCtrl'
+        }
+      }
+    })
+	   .state('app.showbill', {
+      url: '/showbill',
+      cache:false,
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/showbill.html',
+          controller: 'billCtrl'
+        }
+      }
+    })
+	
+    .state('app.openkots', {
       url: '/openkots',
       cache:false,
       views: {
@@ -170,7 +191,6 @@ angular.module('starter', ['ionic','ionic-toast','starter.controllers','starter.
         }
       }
     })
-    
      .state('app.openkot', {
       url: '/openkot/:kotNo',
       cache:false,

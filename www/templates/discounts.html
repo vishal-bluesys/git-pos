@@ -1,0 +1,85 @@
+<ion-view view-title="Discounts">
+  <ion-nav-bar class="bar-positive" align-title="center">
+<ion-nav-back-button class="button-clear">
+			<i class="ion-arrow-left-c"></i> Tables
+  </ion-nav-back-button>
+</ion-nav-bar >
+  
+  <ion-content overflow-scroll = "false">
+    <div class="row">
+       <div class="col">LOCATION : {{bill_location.LocationCode}}</div>
+       <div class="col">TABLES :  {{tableNo}}</div>
+    </div> 
+    <div class="row">
+       <div class="col"><ion-checkbox type="checkbox" name="FHRI" value="FHFD" ng-model="data.FHRAI" ng-click="getDiscout()"> FHRI Member </ion-checkbox></div>
+       <div class="col"><ion-checkbox type="checkbox" ng-model="data.consulate" name="conslate" value="conslate" ng-click="addTax('Notax','00','-1')"> Consulate Staff  </ion-checkbox></div>
+    </div>
+    <div class="row" ng-if="!data.consulate" >
+       <div class="col" ng-repeat="tax in taxes | orderBy : 'FieldName' "><ion-checkbox type="checkbox" ng-model="data.tax[$index]" id="{{tax.FieldName}}" name="{{tax.FieldName}}" value="{{tax.Percent1}}" ng-click="addTax('{{tax.FieldName}}',tax.Percent1,{{$index}})"> {{tax.TaxDescription}} </ion-checkbox></div>
+       
+    </div> 	
+
+       
+			 <div class="card list">
+				   <div class="item item-divider">
+					  Discounts
+				   </div>
+				   <form name="discountForm">
+				   <div class="item item-text-wrap row">
+				   <div class="col col-50">
+						<label class="item item-input">
+							  <span class="input-label">Food Discount %</span>
+							  <input type="number" ng-model="data.foodDisc" name="foodDisc" id="foodDisc" value ="" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+						</label>
+						 <span class="error" ng-show="!discountForm.foodDisc.$valid">
+										Only number are accept up to two decimal place
+									</span>
+						<label class="item item-input">
+							  <span class="input-label">Bev. Discount %</span>
+							  <input type="number" ng-model="data.bevDisc" name="bevDisc" id="bevDisc" value ="" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+						</label>
+						 <span class="error" ng-show="!discountForm.bevDisc.$valid">
+										Only number are accept up to two decimal place
+									</span>
+						<label class="item item-input">
+							  <span class="input-label">Liquer Discount %</span>
+							  <input type="number" ng-model="data.liqDisc" name="liqDisc" id="liqDisc" value =""ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+						</label>
+						 <span class="error" ng-show="!discountForm.liqDisc.$valid">
+										Only number are accept up to two decimal place
+									</span>
+					</div>
+					<div class="col col-50">
+						<label class="item item-input">
+							  <span class="input-label">Discount prefered By</span>
+							  <input type="number" ng-model="data.discPrefBy" name="discPrefBy" id="discPrefBy" value ="" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+						</label>
+						 <span class="error" ng-show="!discountForm.discPrefBy.$valid">
+										Only number are accept up to two decimal place
+									</span>
+						<label class="item item-input">
+							  <span class="input-label">Tobbaco Discount</span>
+							  <input type="number" ng-model="data.tobacDisc" name="tobacDisc" id="tobacDisc" value ="" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+						</label>
+						 <span class="error" ng-show="!discountForm.tobacDisc.$valid">
+										Only number are accept up to two decimal place
+									</span>
+						<label class="item item-input">
+							  <span class="input-label">Flat Discount</span>
+							  <input type="number" ng-model="data.flatDisc" name="flatDisc" id="flatDisc" value ="" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+						</label>
+						 <span class="error" ng-show="!discountForm.flatDisc.$valid">
+										Only number are accept up to two decimal place
+									</span>
+					</div>
+					</div>
+					
+			 </div>
+			 
+			 <div class="col ">
+			   <a class="button button-positive" href="#/app/showbill" ng-disabled="!discountForm.$valid" ng-click="saveDiscount()">Show Bill</a>
+			   </form>
+			 </div>
+   </ion-content>
+   
+</ion-view>

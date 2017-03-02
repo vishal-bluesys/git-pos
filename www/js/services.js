@@ -327,7 +327,7 @@ angular.module('starter')
           };
 		    
 			this.getTable = function(callback){
-                $http.get(BASE_URL+'/hotsys/getTable').then(function(response){
+                $http.get(BASE_URL+'/hotsys/getTable/'+JSON.parse(localStorage.getItem('location')).LocationCode).then(function(response){
 			 callback(response.data);
                 console.log(response.data);
                    

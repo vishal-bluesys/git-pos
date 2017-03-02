@@ -596,6 +596,15 @@ $scope.kotmenus = [];
 		  $scope.taxes = response;
 		  console.log(response);
 		  $scope.data.taxes=$scope.taxes;
+		  
+	 response.forEach(function(item,value){
+		 if(item.ApplicableDefault=='Y'){
+			 $scope.taxesarr[value]=item.FieldName;
+			 console.log($scope.taxesarr);
+			 $scope.data.appliedTaxes = $scope.taxesarr;
+		 }
+		 
+	 });
 	  });  
 	  
 		
@@ -720,94 +729,168 @@ $scope.kotmenus = [];
 				$scope.openKots[value].KOTModifyFlag='N';
 				$scope.openKots[value].NettAmount = Math.ceil(item.NettAmount);
 				$scope.openKots[value].Quantity= Math.ceil(item.Quantity);
-				if($scope.discounts){
+				
 				if($scope.openKots[value].MenuTypeCode=='FD'){
-					$scope.discount = parseFloat($scope.discount) + parseFloat(($scope.openKots[value].NettAmount*($scope.discounts.foodDisc)/100));
-					//console.log($scope.discount);
-					
-					if(!$scope.discounts.consulate){
-					 $scope.taxamount = parseFloat($scope.taxamount) + parseFloat($scope.calculateTax($scope.openKots[value]));
-					//$scope.tax1 = (((parseFloat($scope.openKots[value].NettAmount)- parseFloat(($scope.openKots[value].NettAmount*($scope.discounts.foodDisc)/100)))*$scope.openKots[value].Tax1)/100);
-					//$scope.tax2 = (((parseFloat($scope.openKots[value].NettAmount)- parseFloat(($scope.openKots[value].NettAmount*($scope.discounts.foodDisc)/100)))*$scope.openKots[value].Tax2)/100);
-					//console.log($scope.tax1+" | "+$scope.tax2);
-					}
+				$scope.discount = $scope.calculateFDDiscount(item); 
 				}
 				if($scope.openKots[value].MenuTypeCode=='B'){
-					$scope.discount = parseFloat($scope.discount) + parseFloat(($scope.openKots[value].NettAmount*($scope.discounts.bevDisc)/100));
-					//console.log($scope.discount);
-					if(!$scope.discounts.consulate){
-					 $scope.taxamount = parseFloat($scope.taxamount) + parseFloat($scope.calculateTax($scope.openKots[value]));
-					//$scope.tax1 = (((parseFloat($scope.openKots[value].NettAmount)- parseFloat(($scope.openKots[value].NettAmount*($scope.discounts.foodDisc)/100)))*$scope.openKots[value].Tax1)/100);
-					//$scope.tax2 = (((parseFloat($scope.openKots[value].NettAmount)- parseFloat(($scope.openKots[value].NettAmount*($scope.discounts.foodDisc)/100)))*$scope.openKots[value].Tax2)/100);
-					//console.log($scope.tax1+" | "+$scope.tax2);
-					}
+				$scope.discount = $scope.calculateBVDiscount(item); 
 				}
 				if($scope.openKots[value].MenuTypeCode=='LQ'){
-					$scope.discount = parseFloat($scope.discount) + parseFloat(($scope.openKots[value].NettAmount*($scope.discounts.liqDisc)/100));
-					//console.log($scope.discount);
-					if(!$scope.discounts.consulate){
-					 $scope.taxamount = parseFloat($scope.taxamount) + parseFloat($scope.calculateTax($scope.openKots[value]));
-					//$scope.tax1 = (((parseFloat($scope.openKots[value].NettAmount)- parseFloat(($scope.openKots[value].NettAmount*($scope.discounts.foodDisc)/100)))*$scope.openKots[value].Tax1)/100);
-					//$scope.tax2 = (((parseFloat($scope.openKots[value].NettAmount)- parseFloat(($scope.openKots[value].NettAmount*($scope.discounts.foodDisc)/100)))*$scope.openKots[value].Tax2)/100);
-					//console.log($scope.tax1+" | "+$scope.tax2);
-					}
+				$scope.discount = $scope.calculateLQDiscount(item); 
 				}
 				if($scope.openKots[value].MenuTypeCode=='TB'){
-					$scope.discount = parseFloat($scope.discount) + parseFloat(($scope.openKots[value].NettAmount*($scope.discounts.tobacDisc)/100));
-					//console.log($scope.discount);
-					if(!$scope.discounts.consulate){
-					 $scope.taxamount = parseFloat($scope.taxamount) + parseFloat($scope.calculateTax($scope.openKots[value]));
-					//$scope.tax1 = (((parseFloat($scope.openKots[value].NettAmount)- parseFloat(($scope.openKots[value].NettAmount*($scope.discounts.foodDisc)/100)))*$scope.openKots[value].Tax1)/100);
-					//$scope.tax2 = (((parseFloat($scope.openKots[value].NettAmount)- parseFloat(($scope.openKots[value].NettAmount*($scope.discounts.foodDisc)/100)))*$scope.openKots[value].Tax2)/100);
-					//console.log($scope.tax1+" | "+$scope.tax2);
-					}
+				$scope.discount = $scope.calculateTBDiscount(item); 
 				}
-				
-				
+				if(!$scope.discounts.consulate){
+				$scope.taxamount = $scope.taxamount + $scope.calculateTax(item);
+				}else{
+				$scope.taxamount = $scope.taxamount + 0;
 				}
-				
-				
-				
-				
 			});
 			
 			    if($scope.discounts){
-				if($scope.discounts.flatDisc){
-					$scope.discount = parseFloat($scope.discount) + parseFloat($scope.discounts.flatDisc);
+						if($scope.discounts.flatDisc){
+							$scope.discount = parseFloat($scope.discount) + parseFloat($scope.discounts.flatDisc);
+						}
+					   
 				}
-			   if($scope.discounts.discPrefBy){
-					$scope.discount = parseFloat($scope.discount) + parseFloat($scope.discounts.discPrefBy);
-					//console.log($scope.discount);
-					
-				}
-				}
+				
 				$scope.NettAmount = parseFloat($scope.totalSum)- parseFloat($scope.discount);
 				$scope.finalAmount = parseFloat($scope.finalAmount) + parseFloat(parseFloat($scope.NettAmount)+parseFloat($scope.taxamount));
              });
             
-			
-			$scope.calculateTax = function(item){
-				//console.log(item);
-				// console.log("index of tax2"+$scope.discounts.appliedTaxes.indexOf('TAX2'));
-				if($scope.discounts.appliedTaxes.indexOf('TAX1')!=-1){
-					$scope.tax1 = parseFloat(((parseFloat(item.NettAmount)- parseFloat((item.NettAmount*($scope.discounts.foodDisc)/100)))*item.Tax1)/100).toFixed(2);
-									console.log("tax1"+$scope.tax1);
-
-				}
-				if($scope.discounts.appliedTaxes.indexOf('TAX2') != -1){
-		            console.log($scope.discounts.appliedTaxes.indexOf('TAX2'));		    
-					if($scope.discounts.taxes[$scope.discounts.appliedTaxes.indexOf('TAX2')].CalculateOnTax1 == 1){
-						$scope.tax2 = parseFloat((((parseFloat(item.NettAmount)- parseFloat((item.NettAmount*($scope.discounts.foodDisc)/100)))+$scope.tax1)*item.Tax2)/100).toFixed(2);
-									console.log("tax2"+$scope.tax2);
-					}else{
-						$scope.tax2 = parseFloat(((parseFloat(item.NettAmount)- parseFloat((item.NettAmount*($scope.discounts.foodDisc)/100)))*item.Tax2)/100).toFixed(2);
-									console.log("tax2"+$scope.tax2);
-					}
+	  $scope.calculateFDDiscount = function(item){
+				if($scope.discounts.foodDisc){
 					
-
+					$scope.discount = parseFloat($scope.discount) + parseFloat((item.NettAmount*($scope.discounts.foodDisc)/100));
+					//$scope.calculateTax(item);
 				}
 				
-				return parseFloat($scope.tax1)+parseFloat($scope.tax2);
+				return parseFloat($scope.discount);
+			}
+		
+	  $scope.calculateLQDiscount = function(item){
+				if($scope.discounts.liqDisc){
+					
+					$scope.discount = parseFloat($scope.discount) + parseFloat((item.NettAmount*($scope.discounts.liqDisc)/100));
+					//$scope.calculateTax(item);
+				}
+				
+				return parseFloat($scope.discount);
+			}
+	  
+	  $scope.calculateBVDiscount = function(item){
+				if($scope.discounts.bevDisc){
+					
+					$scope.discount = parseFloat($scope.discount) + parseFloat((item.NettAmount*($scope.discounts.bevDisc)/100));
+					//$scope.calculateTax(item);
+				}
+				
+				return parseFloat($scope.discount);
+			}
+		
+	   $scope.calculateTBDiscount = function(item){
+				if($scope.discounts.tobacDisc){
+					
+					$scope.discount = parseFloat($scope.discount) + parseFloat((item.NettAmount*($scope.discounts.tobacDisc)/100));
+					//$scope.calculateTax(item);
+				}
+				
+				return parseFloat($scope.discount);
+			}
+			
+			
+			$scope.calculateTax = function(item){
+		     //console.log($scope.discounts.appliedTaxes.indexOf('TAX1'));
+			 console.log(item.MenuTypeCode);
+			 if($scope.discounts.appliedTaxes.indexOf('TAX1')==-1){
+				 $scope.tax1=0;
+			 }else{
+				 if($scope.discounts.foodDisc){
+					 if(item.MenuTypeCode=='FD'){
+						//$scope.tax1 = parseFloat(((item.NettAmount*($scope.discounts.foodDisc)/100)*item.Tax1)/100).toFixed(2); 
+						$scope.tax1 = parseFloat(((parseFloat(item.NettAmount)-(item.NettAmount*($scope.discounts.foodDisc)/100))*item.Tax1)/100).toFixed(2); 
+					 }
+					 else{
+						 $scope.tax1 = parseFloat(((item.NettAmount)*item.Tax1)/100).toFixed(2);  
+					 }
+				 }else if($scope.discounts.bevDisc){
+					 if(item.MenuTypeCode=='B'){
+						//$scope.tax1 = parseFloat(((item.NettAmount*($scope.discounts.bevDisc)/100)*item.Tax1)/100).toFixed(2); 
+						$scope.tax1 = parseFloat(((parseFloat(item.NettAmount)-(item.NettAmount*($scope.discounts.bevDisc)/100))*item.Tax1)/100).toFixed(2); 
+					 }
+					 else{
+						 $scope.tax1 = parseFloat(((item.NettAmount)*item.Tax1)/100).toFixed(2);  
+					 }
+				 }else if($scope.discounts.liqDisc){
+					 if(item.MenuTypeCode=='LQ'){
+						//$scope.tax1 = parseFloat(((item.NettAmount*($scope.discounts.liqDisc)/100)*item.Tax1)/100).toFixed(2); 
+						$scope.tax1 = parseFloat(((parseFloat(item.NettAmount)-(item.NettAmount*($scope.discounts.liqDisc)/100))*item.Tax1)/100).toFixed(2); 
+					 }
+					 else{
+						$scope.tax1 = parseFloat(((item.NettAmount)*item.Tax1)/100).toFixed(2);  
+					 }
+				 }else if($scope.discounts.tobacDisc){
+					 if($scope.item.MenuTypeCode=='TB'){
+						//$scope.tax1 = parseFloat(((item.NettAmount*($scope.discounts.tobacDisc)/100)*item.Tax1)/100).toFixed(2); 
+						$scope.tax1 = parseFloat(((parseFloat(item.NettAmount)-(item.NettAmount*($scope.discounts.tobacDisc)/100))*item.Tax1)/100).toFixed(2); 
+					 }
+					 else{
+						 $scope.tax1 = parseFloat(((item.NettAmount)*item.Tax1)/100).toFixed(2);  
+					 }
+				 }else{
+					$scope.tax1 = parseFloat(((item.NettAmount)*item.Tax1)/100).toFixed(2);  
+				 }
+				 
+			 }
+			 
+			 if($scope.discounts.appliedTaxes.indexOf('TAX2')==-1){
+				 $scope.tax2=0;
+			 }else{
+				 if($scope.discounts.foodDisc){
+					 if(item.MenuTypeCode=='FD'){
+						 
+						$scope.tax2 = parseFloat(((parseFloat(item.NettAmount)-(item.NettAmount*($scope.discounts.foodDisc)/100))*item.Tax2)/100).toFixed(2); 
+					 }
+					 else{
+						 $scope.tax2 = parseFloat(((item.NettAmount)*item.Tax2)/100).toFixed(2);  
+					 }
+				 }else if($scope.discounts.bevDisc){
+					 if(item.MenuTypeCode=='B'){
+						//$scope.tax2 = parseFloat(((item.NettAmount*($scope.discounts.bevDisc)/100))*item.Tax2)/100).toFixed(2); 
+						$scope.tax2 = parseFloat(((parseFloat(item.NettAmount)-(item.NettAmount*($scope.discounts.bevDisc)/100))*item.Tax2)/100).toFixed(2); 
+					 }
+					 else{
+						 $scope.tax2 = parseFloat(((item.NettAmount)*item.Tax2)/100).toFixed(2);  
+					 }
+				 }else if($scope.discounts.liqDisc){
+					 if(item.MenuTypeCode=='LQ'){
+						//$scope.tax2 = parseFloat(((item.NettAmount*($scope.discounts.liqDisc)/100)*item.Tax2)/100).toFixed(2); 
+						$scope.tax2 = parseFloat(((parseFloat(item.NettAmount)-(item.NettAmount*($scope.discounts.liqDisc)/100))*item.Tax2)/100).toFixed(2); 
+					 }
+					 else{
+						$scope.tax2 = parseFloat(((item.NettAmount)*item.Tax2)/100).toFixed(2);  
+					 }
+				 }else if($scope.discounts.tobacDisc){
+					 if(item.MenuTypeCode=='TB'){
+						//$scope.tax2 = parseFloat(((item.NettAmount*($scope.discounts.tobacDisc)/100)*item.Tax2)/100).toFixed(2); 
+						$scope.tax2 = parseFloat(((parseFloat(item.NettAmount)-(item.NettAmount*($scope.discounts.tobacDisc)/100))*item.Tax2)/100).toFixed(2); 
+					 }
+					 else{
+						 $scope.tax2 = parseFloat(((item.NettAmount)*item.Tax2)/100).toFixed(2);  
+					 }
+				 }else{
+					$scope.tax2 = parseFloat(((item.NettAmount)*item.Tax2)/100).toFixed(2);  
+				 }
+
+				 
+				 
+			 }
+			 
+			 
+			 console.log($scope.tax1+"tax2"+$scope.tax2);
+             return parseFloat(parseFloat($scope.tax1)+ parseFloat($scope.tax2));		
 			} 
 			
 			

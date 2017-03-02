@@ -558,7 +558,7 @@ $scope.kotmenus = [];
    $scope.openModalmodalkots = function() {
      // Guest List
      Listservice.getKots(function(data) { 
-           console.log(data);
+          // console.log(data);
 			$scope.kots=data;
                         $scope.modalkots.show();
              });
@@ -574,7 +574,7 @@ $scope.kotmenus = [];
    
    $scope.showKot = function(kot){
         $scope.closekotModal();
-        console.log(kot);
+        //console.log(kot);
       
    };
   $scope.removeItem = function(Index){
@@ -713,7 +713,7 @@ $scope.kotmenus = [];
 	 console.log($scope.discounts);
         Listservice.getKots(function(data) {   
 			$scope.openKots = data;
-			console.log(data);
+			//console.log(data);
 			//$scope.data.menulocation = $scope.openKots[0].LocationCode;
 				$scope.data.customerName = $scope.openKots[0].ROOMGuest;
 				$scope.data.folioNo = $scope.openKots[0].RoomFolio;
@@ -889,7 +889,7 @@ $scope.kotmenus = [];
 			 }
 			 
 			 
-			 console.log($scope.tax1+"tax2"+$scope.tax2);
+			// console.log($scope.tax1+"tax2"+$scope.tax2);
              return parseFloat(parseFloat($scope.tax1)+ parseFloat($scope.tax2));		
 			} 
 			
